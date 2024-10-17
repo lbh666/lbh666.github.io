@@ -47,6 +47,9 @@
     <link href="https://fonts.cdnfonts.com/css/menlo" rel="stylesheet">
     <link rel="stylesheet" href="./static/css/image_card_fader.css">
     <link rel="stylesheet" href="./static/css/image_card_slider.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 
 
 </head>
@@ -205,42 +208,26 @@
                         <h2 class="title is-3 has-text-centered">Abstract</h2>
                         <div class="content has-text-justified">
                         <p>
-                            While neural rendering has led to impressive advances in scene reconstruction and novel view synthesis, 
-                            it relies heavily on accurately pre-computed camera poses. To relax this constraint, 
-                            multiple efforts have been made to train Neural Radiance Fields (NeRFs) without pre-processed camera poses. 
-                            However, the implicit representations of NeRFs provide extra challenges to optimize the 3D structure and 
-                            camera poses at the same time. On the other hand, the recently proposed 3D Gaussian Splatting provides 
-                            new opportunities given its explicit point cloud representations. This paper leverages both the explicit 
-                            geometric representation and the continuity of the input video stream to perform novel view synthesis 
-                            without any SfM preprocessing. We process the input frames in a sequential manner and progressively grow 
-                            the 3D Gaussians set by taking one input frame at a time, without the need to pre-compute the camera poses. 
-                            Our method significantly improves over previous approaches in view synthesis and camera pose estimation 
-                            under large motion changes.
+                            Scene reconstruction from casually captured videos has wide applications in real-world scenarios. 
+                            With recent advancements in differentiable rendering techniques, several methods have attempted to simultaneously optimize scene representations (NeRF or 3DGS) and camera poses.
+                            Despite recent progress, existing methods relying on traditional camera input tend to fail in high-speed (or equivalently low-frame-rate) scenarios due to insufficient observations and large pixel displacements between adjacent frames. 
+                            Event cameras, inspired by biological vision, record pixel-wise intensity changes asynchronously with high temporal resolution and low latency, providing valuable scene and motion information in blind inter-frame intervals. 
+                            In this paper, we introduce the event camera to aid scene construction from a casually captured video for the first time, and propose Event-Aided Free-Trajectory 3DGS, called EF-3DGS, which seamlessly integrates the advantages of event cameras into 3DGS through three key components. 
+                            First, we leverage the Event Generation Model (EGM) to fuse events and frames, supervising the rendered views observed by the event stream. 
+                            Second, we adopt the Contrast Maximization (CMax) framework in a piece-wise manner to extract motion information by maximizing the contrast of the Image of Warped Events (IWE), thereby calibrating the estimated poses. 
+                            Besides, based on the Linear Event Generation Model (LEGM), the brightness information encoded in the IWE is also utilized to constrain the 3DGS in the gradient domain. 
+                            Third, to mitigate the absence of color information of events, we introduce photometric bundle adjustment (PBA) to ensure view consistency across events and frames. 
+                            Additionally, we propose a Fixed-GS training strategy that separates the optimization of scene structure and color,
+                            effectively addressing color distortions caused by the lack of color information in events. 
+                            We evaluate our method on the public Tanks and Temples benchmark and a newly collected real-world dataset, RealEv-DAVIS. 
+                            Our method achieves up to 2dB higher PSNR and 40\% lower Absolute Trajectory Error (ATE) compared to state-of-the-art methods under challenging high-speed scenarios.
                         </p>
                         </div>
                     </div>
                 </div>
                 <!-- Paper video. -->
             </div>
-    </section>
-
-    <section class="section" id="BibTeX">
-        <div class="container is-max-desktop content">
-            <h2 class="title">BibTeX</h2>
-            Due to some technical issues, you may cannot find our paper via Google Scholar. 
-            Please use the following BibTeX entry to cite our paper.
-            <pre><code>
-                @InProceedings{Fu_2024_CVPR,
-                    author    = {Fu, Yang and Liu, Sifei and Kulkarni, Amey and Kautz, Jan and Efros, Alexei A. and Wang, Xiaolong},
-                    title     = {COLMAP-Free 3D Gaussian Splatting},
-                    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-                    month     = {June},
-                    year      = {2024},
-                    pages     = {20796-20805}
-                }
-        </code></pre>
-        </div>
-    </section>  
+    </section> 
 
 
     <section class="section">
@@ -248,10 +235,11 @@
             <!-- Method. -->
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full-width">
-                    <h2 class="title is-3 has-text-centered">Approach</h2>
-                    <video id="dollyzoom" autoplay controls muted loop height="100%">
-                        <source src="static/videos/3dgs_pose_method.m4v" type="video/mp4">
-                    </video>
+                    <h2 class="title is-3 has-text-centered">Framework</h2>
+                    <img src='./static/imgs/Fig2.png'></img>
+                    <div class="content has-text-justified">
+                        <p>Method Overview. Our method takes video frames \( \{I_i\} \) and event stream \( \varepsilon = \{\mathbf{e}_k\} \) as input. During training, we random sample \( t \in \{t_{i,j}\} \), leveraging the events within current subinterval and most recent frame to establish the proposed three main constrains, \( \mathcal{L}_{EGM} \), \( \mathcal{L}_{LEGM} \), and \( \mathcal{L}_{PBA} \). The colored dots (red for positive and blue for negative events) represent the event data.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -472,6 +460,15 @@
             </div>
         </div>
     </section>    
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>
+                To be updated
+        </code></pre>
+        </div>
+    </section> 
       
     <footer class="footer">
         <div class="container">
