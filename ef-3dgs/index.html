@@ -66,6 +66,8 @@
                             <span class="author-block">Bohao Liao</a><sup>1</sup>,</span>
                             <span class="author-block">Wei Zhai</a><sup>1</sup></span>
                             <span class="author-block">Zengyu Wan<sup>1</sup>,</span>
+                            <span class="author-block">Zhixin Cheng<sup>1</sup>,</span>
+                            <span class="author-block">Wenfei Yang<sup>1</sup>,</span>
                             <span class="author-block">Tianzhu Zhang</a><sup>1</sup>,</span>
                             <span class="author-block">Yang Cao</a><sup>1</sup>,</span>
                             <span class="author-block">Zheng-Jun Zha</a><sup>1</sup></span>
@@ -97,7 +99,7 @@
     <section class="hero teaser">
         <div class="container is-max-desktop">
             <div class="hero-body">
-                <img class="img-fluid" src="./static/imgs/Fig1.png">
+                <img class="img-fluid" src="./static/imgs/Fig1.pdf">
             </div>
         </div>
     </section>
@@ -112,19 +114,14 @@
                         <h2 class="title is-3 has-text-centered">Abstract</h2>
                         <div class="content has-text-justified">
                         <p>
-                            Scene reconstruction from casually captured videos has wide applications in real-world scenarios. 
-                            With recent advancements in differentiable rendering techniques, several methods have attempted to simultaneously optimize scene representations (NeRF or 3DGS) and camera poses.
-                            Despite recent progress, existing methods relying on traditional camera input tend to fail in high-speed (or equivalently low-frame-rate) scenarios due to insufficient observations and large pixel displacements between adjacent frames. 
-                            Event cameras, inspired by biological vision, record pixel-wise intensity changes asynchronously with high temporal resolution and low latency, providing valuable scene and motion information in blind inter-frame intervals. 
-                            In this paper, we introduce the event camera to aid scene construction from a casually captured video for the first time, and propose Event-Aided Free-Trajectory 3DGS, called EF-3DGS, which seamlessly integrates the advantages of event cameras into 3DGS through three key components. 
-                            First, we leverage the Event Generation Model (EGM) to fuse events and frames, supervising the rendered views observed by the event stream. 
-                            Second, we adopt the Contrast Maximization (CMax) framework in a piece-wise manner to extract motion information by maximizing the contrast of the Image of Warped Events (IWE), thereby calibrating the estimated poses. 
-                            Besides, based on the Linear Event Generation Model (LEGM), the brightness information encoded in the IWE is also utilized to constrain the 3DGS in the gradient domain. 
-                            Third, to mitigate the absence of color information of events, we introduce photometric bundle adjustment (PBA) to ensure view consistency across events and frames. 
-                            Additionally, we propose a Fixed-GS training strategy that separates the optimization of scene structure and color,
-                            effectively addressing color distortions caused by the lack of color information in events. 
-                            We evaluate our method on the public Tanks and Temples benchmark and a newly collected real-world dataset, RealEv-DAVIS. 
-                            Our method achieves up to 2dB higher PSNR and 40% lower Absolute Trajectory Error (ATE) compared to state-of-the-art methods under challenging high-speed scenarios.
+                            Scene reconstruction from casually captured videos has wide real-world applications. 
+                            Despite recent progress, existing methods relying on traditional cameras tend to fail in high-speed scenarios due to insufficient observations and inaccurate pose estimation.
+                            Event cameras, inspired by biological vision, record pixel-wise intensity changes asynchronously with high temporal resolution and low latency, providing valuable scene and motion information in blind inter-frame intervals. In this paper, we introduce the event cameras to aid scene construction from a casually captured video for the first time, and propose Event-Aided Free-Trajectory 3DGS, called \textbf{EF-3DGS}, which seamlessly integrates the advantages of event cameras into 3DGS through three key components. 
+                            First, we leverage the Event Generation Model (EGM) to fuse events and frames, enabling continuous supervision between discrete frames.  
+                            Second, we extract motion information through Contrast Maximization (CMax) of warped events, which calibrates camera poses and provides gradient-domain constraints for 3DGS.
+                            Third, to address the absence of color information in events, we combine photometric bundle adjustment (PBA) with a Fixed-GS training strategy that separates structure and color optimization, effectively ensuring color consistency across different views. 
+                            We evaluate our method on the public Tanks and Temples benchmark and a newly collected
+                            real-world dataset, RealEv-DAVIS. Our method achieves up to 3dB higher PSNR and 40% lower Absolute Trajectory Error (ATE) compared to state-of-the-art methods under challenging high-speed scenarios.
                         </p>
                         </div>
                     </div>
@@ -140,7 +137,7 @@
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full-width">
                     <h2 class="title is-3 has-text-centered">Framework</h2>
-                    <img src='./static/imgs/Fig2.png'></img>
+                    <img src='./static/imgs/Fig2.pdf'></img>
                     <div class="content has-text-justified">
                         <p>Method Overview. Our method takes video frames \( \{I_i\} \) and event stream \( \varepsilon = \{\mathbf{e}_k\} \) as input. During training, we random sample \( t \in \{t_{i,j}\} \), leveraging the events within current subinterval and most recent frame to establish the proposed three main constrains, \( \mathcal{L}_{EGM} \), \( \mathcal{L}_{LEGM} \), and \( \mathcal{L}_{PBA} \). The colored dots (red for positive and blue for negative events) represent the event data.</p>
                     </div>
